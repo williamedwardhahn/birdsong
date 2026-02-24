@@ -27,42 +27,42 @@ These are foundational skills in bioacoustics, but they transfer directly to any
 
 The project is organized as a series of six notebooks, designed to be worked through in order. Each one builds on the last.
 
-### Notebook 0 — A Naturalist's Field Notebook in Python
+### Notebook 0 — A Naturalist's Field Notebook in Python [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_0_Python_Basics.ipynb)
 > *No programming experience required.*
 
 Learn Python fundamentals through the lens of field biology. Variables are specimen labels, lists are species checklists, loops walk a trail, and charts sketch what you observe. Ends with a teaser — loading and hearing a real birdsong recording.
 
 **Concepts:** variables, strings, lists, dictionaries, loops, functions, conditionals, plotting
 
-### Notebook 1 — Sound as Data
+### Notebook 1 — Sound as Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_1_Sound_as_Data.ipynb)
 > *The bridge from Python to audio.*
 
 Take one bird, one recording, and build understanding from the ground up. What is digital audio? What does sample rate mean? What is a spectrogram and why does it matter? By the end you'll be able to look at a spectrogram and *read* what a bird is doing.
 
 **Concepts:** digital audio, sample rate, waveforms, spectrograms, audio manipulation
 
-### Notebook 2 — Birdsong Species Explorer
+### Notebook 2 — Birdsong Species Explorer [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_2_Birdsong_Explorer.ipynb)
 > *Meet all five species — with your eyes and ears.*
 
 Listen to recordings from each species, compare their spectrograms side by side, view montages of all 98 files, and test whether *you* can identify species from unlabeled spectrograms. No machine learning — just pattern recognition.
 
 **Concepts:** comparative listening, spectrogram reading, within-species variation, visual pattern recognition
 
-### Notebook 3 — Clustering Birdsong with Machine Learning
+### Notebook 3 — Clustering Birdsong with Machine Learning [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_3_Clustering.ipynb)
 > *Teach a computer to hear the differences.*
 
 Extract MFCC features that capture the texture of each recording, train an autoencoder to compress them into 2D, and visualize how species cluster. Then experiment: change the bottleneck size, learning rate, and number of epochs to see how each affects the results.
 
 **Concepts:** MFCCs, autoencoders, bottleneck compression, learning rate, training epochs, clustering
 
-### Notebook 4 — Downloading & Exploring Audio from the Web
+### Notebook 4 — Downloading & Exploring Audio from the Web [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_4_Web_Audio.ipynb)
 > *Working with data from online sources.*
 
 Download birdsong recordings from public URLs, visualize and compare them side by side, and learn how to fetch audio from any web source. Includes a section where you paste your own URL to explore.
 
 **Concepts:** HTTP requests, file I/O, comparative visualization
 
-### Notebook 5 — Analyze Your Own Data
+### Notebook 5 — Analyze Your Own Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_5_Your_Own_Data.ipynb)
 > *Bring your own recordings.*
 
 Upload audio files you've collected (phone recordings, field equipment, any format) to Google Drive, then process, visualize, and cluster them with the same pipeline from Notebook 3. This is where the tools become yours.
