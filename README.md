@@ -106,18 +106,6 @@ Notebooks 0–4 are fully self-contained and require nothing beyond a web browse
 
 ---
 
-## For Instructors
-
-This project is designed as a multi-session lab module for undergraduate or early graduate students in animal behavior, ecology, or related fields. No prior programming experience is assumed.
-
-**Suggested pacing:**
-- **Session 1:** Notebook 0 (Python basics) + Notebook 1 (sound as data) — 60–90 min
-- **Session 2:** Notebook 2 (species explorer) + Notebook 3 (clustering) — 60–90 min
-- **Session 3:** Notebook 4 (web audio) + Notebook 5 (own data) — 60–90 min
-
-The notebooks are self-paced and include explanations at every step. Students are encouraged to modify code, re-run cells, and experiment — that's how computational thinking develops.
-
----
 
 ## Species in the Dataset
 
