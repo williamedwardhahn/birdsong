@@ -23,6 +23,14 @@ These are foundational skills in bioacoustics, but they transfer directly to any
 
 ---
 
+## Getting Started
+
+Each notebook has an **"Open in Colab"** button — click it to open the notebook in Google Colab, where you can run the code directly in your browser with nothing to install. **You must use these buttons to run the notebooks.** Do not try to download them or open them on your computer — they are designed to run in Colab.
+
+Once a notebook opens in Colab, go to **File → Save a copy in Drive** so you have your own version to work in.
+
+---
+
 ## Notebook Sequence
 
 The project is organized as a series of six notebooks, designed to be worked through in order. Each one builds on the last.
