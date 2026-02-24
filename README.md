@@ -132,6 +132,15 @@ All dependencies are pre-installed in Google Colab or installed automatically by
 
 ---
 
+## Collaborators
+
+This project is a collaboration between:
+
+- **[Rindy Anderson](https://biology.fau.edu/directory/anderson/index.php)** — Associate Professor, Department of Biological Sciences, Florida Atlantic University
+- **[William Hahn](https://www.math.fau.edu/people/faculty/william-hahn.php)** — Associate Professor, Department of Mathematics and Statistics, Florida Atlantic University
+
+---
+
 ## License
 
 Audio data and notebook content are provided for educational use.
