@@ -79,11 +79,11 @@ Notebooks 0–2 are fully self-contained and require nothing beyond a web browse
 ├── Notebook_1_Birdsong_Intro.ipynb     # Audio processing & ML pipeline
 ├── Notebook_2_Web_Audio.ipynb          # Downloading & exploring web audio
 ├── Notebook_3_Your_Own_Data.ipynb      # Bring your own recordings
-├── Bachman_s sparrow/                  # 19 WAV files
-├── Northern cardinal/                  # 9 WAV files
-├── Song sparrow/                       # 15 WAV files
-├── swamp sparrow/                      # 10 WAV files
-├── Zebra finch/                        # 45 WAV files
+├── bachmans_sparrow/                   # 19 WAV files
+├── northern_cardinal/                  # 9 WAV files
+├── song_sparrow/                       # 15 WAV files
+├── swamp_sparrow/                      # 10 WAV files
+├── zebra_finch/                        # 45 WAV files
 ├── archive/                            # Previous notebook versions
 └── README.md
 ```
