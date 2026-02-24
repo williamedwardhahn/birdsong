@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birdsong Classification with Python</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+        :root {
+            --green-900: #1a2e1a;
+            --green-800: #2d4a2d;
+            --green-700: #3b6039;
+            --green-600: #4a7c48;
+            --green-500: #5a9a56;
+            --green-100: #e8f0e6;
+            --green-50: #f3f8f2;
+            --earth-700: #6b4c2a;
+            --earth-600: #8a6338;
+            --earth-500: #a47d4f;
+            --earth-400: #c4a06e;
+            --earth-100: #faf3ea;
+            --sand: #faf7f2;
+            --white: #ffffff;
+            --text: #2c2c2c;
+            --text-muted: #5e5e5e;
+            --border: #ddd5ca;
+        }
+
+        html { scroll-behavior: smooth }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--sand);
+            line-height: 1.6;
+        }
+
+        h1,h2,h3 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            background: linear-gradient(135deg, var(--green-900) 0%, var(--green-800) 40%, var(--green-700) 100%);
+            color: var(--white);
+            padding: 80px 24px 64px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.2vw, 1.25rem);
+            opacity: 0.88;
+            max-width: 640px;
+            margin: 0 auto 28px;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-style: italic;
+            position: relative;
+        }
+        .hero .credits {
+            font-size: 0.88rem;
+            opacity: 0.7;
+            position: relative;
+        }
+        .hero .credits a {
+            color: var(--earth-400);
+            text-decoration: none;
+        }
+        .hero .credits a:hover { text-decoration: underline }
+
+        /* ---- Section ---- */
+        section {
+            padding: 56px 0;
+        }
+        section + section {
+            border-top: 1px solid var(--border);
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--green-800);
+            margin-bottom: 8px;
+        }
+        .section-lead {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            max-width: 640px;
+        }
+
+        /* ---- Notebook Cards ---- */
+        .notebook-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 20px;
+        }
+        .nb-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .nb-card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .nb-num {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--green-600);
+            margin-bottom: 4px;
+        }
+        .nb-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--green-900);
+            margin-bottom: 8px;
+        }
+        .nb-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            flex: 1;
+            margin-bottom: 18px;
+        }
+        .colab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--earth-600);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+        .colab-btn:hover { background: var(--earth-700) }
+        .colab-btn svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* ---- Getting Started ---- */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .step {
+            background: var(--green-50);
+            border: 1px solid var(--green-100);
+            border-radius: 10px;
+            padding: 24px;
+        }
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--green-600);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.88rem;
+            margin-bottom: 12px;
+        }
+        .step h3 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+            color: var(--green-900);
+        }
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ---- Species Table ---- */
+        .species-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .species-table thead {
+            background: var(--green-800);
+            color: var(--white);
+        }
+        .species-table th {
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+        .species-table td {
+            padding: 14px 18px;
+            font-size: 0.92rem;
+            border-top: 1px solid var(--border);
+        }
+        .species-table tbody tr:hover {
+            background: var(--green-50);
+        }
+        .species-table .sci {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+        .species-table .count {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* ---- Footer ---- */
+        footer {
+            background: var(--green-900);
+            color: rgba(255,255,255,0.75);
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: var(--earth-400);
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline }
+        footer .collab-names {
+            margin-bottom: 8px;
+        }
+        footer .collab-names strong {
+            color: var(--white);
+        }
+        footer .uni {
+            font-size: 0.82rem;
+            opacity: 0.6;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 600px) {
+            .hero { padding: 56px 20px 48px }
+            section { padding: 40px 0 }
+            .notebook-grid { grid-template-columns: 1fr }
+            .steps { grid-template-columns: 1fr }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<header class="hero">
+    <div class="container">
+        <h1>Birdsong Classification with Python</h1>
+        <p class="subtitle">An introduction to computational notebooks and data science.</p>
+        <p class="credits">
+            A collaboration between
+            <a href="https://biology.fau.edu/directory/anderson/index.php">Rindy Anderson</a> &amp;
+            <a href="https://www.math.fau.edu/people/faculty/william-hahn.php">William Hahn</a>
+            &middot; Florida Atlantic University
+        </p>
+    </div>
+</header>
+
+<!-- Notebooks -->
+<section>
+    <div class="container">
+        <h2 class="section-title">Notebook Sequence</h2>
+        <p class="section-lead">Six notebooks, designed to be worked through in order. Each one builds on the last. Click "Open in Colab" to start.</p>
+
+        <div class="notebook-grid">
+
+            <div class="nb-card">
+                <span class="nb-num">Notebook 0</span>
+                <h3>A Naturalist's Field Notebook in Python</h3>
+                <p>No programming experience required. Learn Python fundamentals through the lens of field biology &mdash; variables, lists, loops, and your first birdsong recording.</p>
+                <a class="colab-btn" href="https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_0_Python_Basics.ipynb" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+
+            <div class="nb-card">
+                <span class="nb-num">Notebook 1</span>
+                <h3>Sound as Data</h3>
+                <p>The bridge from Python to audio. What is digital audio? What does a spectrogram tell you? By the end you'll <em>read</em> what a bird is doing from its spectrogram.</p>
+                <a class="colab-btn" href="https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_1_Sound_as_Data.ipynb" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+
+            <div class="nb-card">
+                <span class="nb-num">Notebook 2</span>
+                <h3>Birdsong Species Explorer</h3>
+                <p>Meet all five species with your eyes and ears. Compare spectrograms side by side, listen to recordings, and test your own pattern recognition.</p>
+                <a class="colab-btn" href="https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_2_Birdsong_Explorer.ipynb" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+
+            <div class="nb-card">
+                <span class="nb-num">Notebook 3</span>
+                <h3>Clustering Birdsong with Machine Learning</h3>
+                <p>Extract MFCC features, train an autoencoder to compress them into 2D, and visualize how species cluster. Experiment with learning rate, epochs, and bottleneck size.</p>
+                <a class="colab-btn" href="https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_3_Clustering.ipynb" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+
+            <div class="nb-card">
+                <span class="nb-num">Notebook 4</span>
+                <h3>Downloading &amp; Exploring Audio from the Web</h3>
+                <p>Download birdsong recordings from public URLs, visualize and compare them, and learn to fetch audio from any web source.</p>
+                <a class="colab-btn" href="https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_4_Web_Audio.ipynb" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+
+            <div class="nb-card">
+                <span class="nb-num">Notebook 5</span>
+                <h3>Analyze Your Own Data</h3>
+                <p>Upload your own audio files to Google Drive, then process, visualize, and cluster them with the same pipeline. This is where the tools become yours.</p>
+                <a class="colab-btn" href="https://colab.research.google.com/github/williamedwardhahn/birdsong/blob/main/Notebook_5_Your_Own_Data.ipynb" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Open in Colab
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Getting Started -->
+<section>
+    <div class="container">
+        <h2 class="section-title">Getting Started</h2>
+        <p class="section-lead">Everything runs in Google Colab &mdash; nothing to install on your computer.</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Open in Colab</h3>
+                <p>Click any "Open in Colab" button above. The notebook opens in your browser, ready to run.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Save a Copy</h3>
+                <p>Go to <strong>File &rarr; Save a copy in Drive</strong> so you have your own version to work in.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Run Cells in Order</h3>
+                <p>Click the Play button or press <strong>Shift + Enter</strong> to run each cell from top to bottom.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Species Dataset -->
+<section>
+    <div class="container">
+        <h2 class="section-title">Species in the Dataset</h2>
+        <p class="section-lead">98 field recordings across five species.</p>
+
+        <table class="species-table">
+            <thead>
+                <tr>
+                    <th>Species</th>
+                    <th style="text-align:center">Files</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Bachman's Sparrow <span class="sci">Peucaea aestivalis</span></td>
+                    <td class="count">19</td>
+                    <td>Field recordings with coded identifiers</td>
+                </tr>
+                <tr>
+                    <td>Northern Cardinal <span class="sci">Cardinalis cardinalis</span></td>
+                    <td class="count">9</td>
+                    <td>Named individuals with distinct song types</td>
+                </tr>
+                <tr>
+                    <td>Song Sparrow <span class="sci">Melospiza melodia</span></td>
+                    <td class="count">15</td>
+                    <td>Multiple song types per population</td>
+                </tr>
+                <tr>
+                    <td>Swamp Sparrow <span class="sci">Melospiza georgiana</span></td>
+                    <td class="count">10</td>
+                    <td>Recordings from Conneaut and Valley sites</td>
+                </tr>
+                <tr>
+                    <td>Zebra Finch <span class="sci">Taeniopygia guttata</span></td>
+                    <td class="count">45</td>
+                    <td>Lab recordings including train/test splits by individual</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p class="collab-names">
+            <strong><a href="https://biology.fau.edu/directory/anderson/index.php">Rindy Anderson</a></strong>, Biological Sciences &amp;
+            <strong><a href="https://www.math.fau.edu/people/faculty/william-hahn.php">William Hahn</a></strong>, Mathematics &amp; Statistics
+        </p>
+        <p class="uni">Florida Atlantic University</p>
+    </div>
+</footer>
+
+</body>
+</html>
